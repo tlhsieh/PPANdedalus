@@ -73,23 +73,23 @@ Now run, ``source dedalus_paths.csh`` to set these environmental paths.
 We are now ready to create the directories and download the source files. To do this, run the following script:
  
 ```
-    # download HDF5 from source
-    mkdir -p ${HDF5_DIR}
-    cd ${HDF5_DIR}
-    wget https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-${HDF5_VERSION}.tar
+# download HDF5 from source
+mkdir -p ${HDF5_DIR}
+cd ${HDF5_DIR}
+wget https://support.hdfgroup.org/ftp/HDF5/current/src/hdf5-${HDF5_VERSION}.tar
 
-    # download FFTW built from source
-    mkdir -p ${FFTW_PATH}
-    cd ${FFTW_PATH}
-    wget http://www.fftw.org/fftw-${FFTW_VERSION}.tar.gz
+# download FFTW built from source
+mkdir -p ${FFTW_PATH}
+cd ${FFTW_PATH}
+wget http://www.fftw.org/fftw-${FFTW_VERSION}.tar.gz
 
-    # Dedalus from mercurial
-    hg clone https://bitbucket.org/dedalus-project/dedalus ${DEDALUS_REPO}
-    cd ${DEDALUS_REPO}
+# Dedalus from mercurial
+hg clone https://bitbucket.org/dedalus-project/dedalus ${DEDALUS_REPO}
+cd ${DEDALUS_REPO}
 
-    # download h5py from source
-    cd /nbhome/${USER}/software/
-    git clone https://github.com/h5py/h5py.git
+# download h5py from source
+cd /nbhome/${USER}/software/
+git clone https://github.com/h5py/h5py.git
 ```
 
 Build and Install on Analysis
@@ -97,44 +97,44 @@ Build and Install on Analysis
 Login into the analysis cluster and  ``source dedalus_paths.csh``. To build the packages, run the following script 
 
 ```
-    # HDF5 built from source
-    cd ${HDF5_DIR}
-    tar -xvf hdf5-${HDF5_VERSION}.tar
-    cd hdf5-${HDF5_VERSION}
-    ./configure --prefix=${HDF5_DIR} \
-        CC=mpicc \
-        CXX=mpicxx \
-        F77=mpif90 \
-        MPICC=mpicc \
-        MPICXX=mpicxx \
-        --enable-shared \
-        --enable-parallel
-    make -j4
-    make install
-    
-    #pip3 install --user --no-binary=h5py h5py
+# HDF5 built from source
+cd ${HDF5_DIR}
+tar -xvf hdf5-${HDF5_VERSION}.tar
+cd hdf5-${HDF5_VERSION}
+./configure --prefix=${HDF5_DIR} \
+CC=mpicc \
+CXX=mpicxx \
+F77=mpif90 \
+MPICC=mpicc \
+MPICXX=mpicxx \
+--enable-shared \
+--enable-parallel
+make -j4
+make install
 
-    # FFTW built from source
-    cd ${FFTW_PATH}
-    tar -xvzf fftw-${FFTW_VERSION}.tar.gz
-    cd fftw-${FFTW_VERSION}
-    ./configure --prefix=${FFTW_PATH} \
-        CC=mpicc \
-        CXX=mpicxx \
-        F77=mpif90 \
-        MPICC=mpicc \
-        MPICXX=mpicxx \
-        --enable-shared \
-        --enable-mpi \
-        --enable-openmp \
-        --enable-threads
-    make -j4
-    make install
+#pip3 install --user --no-binary=h5py h5py
 
-    # Dedalus from mercurial
-    cd ${DEDALUS_REPO}
-    #pip install --user -r requirements.txt
-    python setup.py build_ext --inplace
+# FFTW built from source
+cd ${FFTW_PATH}
+tar -xvzf fftw-${FFTW_VERSION}.tar.gz
+cd fftw-${FFTW_VERSION}
+./configure --prefix=${FFTW_PATH} \
+CC=mpicc \
+CXX=mpicxx \
+F77=mpif90 \
+MPICC=mpicc \
+MPICXX=mpicxx \
+--enable-shared \
+--enable-mpi \
+--enable-openmp \
+--enable-threads
+make -j4
+make install
+
+# Dedalus from mercurial
+cd ${DEDALUS_REPO}
+#pip install --user -r requirements.txt
+python setup.py build_ext --inplace
 ```
 
 Notes
