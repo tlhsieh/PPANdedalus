@@ -33,7 +33,7 @@ dependencies:
   - pkgconfig
 ```
 
-Setup and activate the dedalus environment, 
+Setup the dedalus environment, 
 ```
 conda env create -f dedalus.yml
 ```
