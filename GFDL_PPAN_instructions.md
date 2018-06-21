@@ -1,16 +1,15 @@
-Install notes for GFDL PPAN Cluster 
-************************************
+#Install notes for GFDL PPAN Cluster 
 
 This installation uses conda to install BLAS, openmpi, and the various Python packages required by dedalus. The only exceptions are HDF5, FFTW, and h5py which are built manually from source. For these manual installations, the source download must be conducted on the `public` nodes, which can access the internet. The installation, however, must be done on the `analysis` nodes, which have different compiliers. By default, these instructions create the directory ``\nbhome\${USER}\software`` and install dedalus, HDF5, FFTW, and h5py within this directory. We assume the user is running the default c-shell. 
 
 Downloads on Public 
-----------------------------
+-------------------
 
 These instructions assume you have installed Anaconda (or Miniconda) to your ``\nbhome\${USER}``. To start, let's create a new conda environemnt for your dedalus installation. 
 
-Login into ``public``` and create a  ``dedalus.yml`` file with following contents:
+Login into ``public`` and create a  ``dedalus.yml`` file with following contents:
 
-::
+```
 name: dedalus 
 channels:
   - defaults
@@ -25,18 +24,18 @@ dependencies:
   - matplotlib
   - pathlib
   - docopt
-::
+```
 
 Setup and activate the dedalus environment, 
-::
+```
 conda env create -f dedalus.yml
 source activate dedalus 
-::
+```
 
 We will now create a file that sets the environment variables necessary for subsequently building the packages.
 
 Create a file entitled ``dedalus_paths.csh`` with the following content:
-::
+```
 #DEDALUS SETUP
 
 module load gcc
@@ -63,13 +62,13 @@ setenv DEDALUS_REPO /nbhome/${USER}/software/dedalus
 setenv PYTHONPATH ${DEDALUS_REPO}:${PYTHONPATH}
 
 setenv H5PY_REPO /nbhome/${USER}/software/h5py
-::  
+```
 
 Now run, ``source dedalus_paths.csh`` to set these environmental paths. 
  
 We are now ready to create the directories and download the source files. To do this, run the following script:
  
-::
+```
     # download HDF5 from source
     mkdir -p ${HDF5_DIR}
     cd ${HDF5_DIR}
@@ -87,12 +86,13 @@ We are now ready to create the directories and download the source files. To do 
     # download h5py from source
     cd /nbhome/${USER}/software/
 	git clone https://github.com/h5py/h5py.git
-::
+```
 
 Installation on Analysis
--------------------------
+------------------------
 Login into the analysis cluster and  ``source dedalus_paths.csh``. To build the packages, run the following script 
 
+```
     # HDF5 built from source
     cd ${HDF5_DIR}
     tar -xvf hdf5-${HDF5_VERSION}.tar
@@ -107,8 +107,8 @@ Login into the analysis cluster and  ``source dedalus_paths.csh``. To build the 
         --enable-parallel
     make -j4
     make install
-
-   # pip3 install --user --no-binary=h5py h5py
+    
+    #pip3 install --user --no-binary=h5py h5py
 
     # FFTW built from source
     cd ${FFTW_PATH}
@@ -131,8 +131,7 @@ Login into the analysis cluster and  ``source dedalus_paths.csh``. To build the 
     cd ${DEDALUS_REPO}
     #pip install --user -r requirements.txt
     python setup.py build_ext --inplace
-
-::
+```
 
 Notes
 -----
