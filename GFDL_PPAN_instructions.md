@@ -1,4 +1,6 @@
-### Install notes for GFDL PPAN Cluster 
+Install notes for GFDL PPAN Cluster 
+====================================
+
 
 This installation uses conda to install BLAS, openmpi, and the various Python packages required by dedalus. The only exceptions are HDF5, FFTW, and h5py which are built manually from source. For these manual installations, the source download must be conducted on the `public` nodes, which can access the internet. **Installation must be done on the `analysis` nodes**, which has the necessary compiliers.
 
