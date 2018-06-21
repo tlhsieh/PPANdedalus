@@ -44,6 +44,8 @@ Create a file entitled ``dedalus_paths.csh`` with the following content:
 
 module load gcc
 
+setenv CC mpicc
+
 source /nbhome/${USER}/anaconda3/etc/profile.d/conda.csh
 conda activate dedalus
 
@@ -111,6 +113,11 @@ MPICXX=mpicxx \
 --enable-parallel
 make -j4
 make install
+
+
+cd ${H5PY_REPO}
+python setup.py configure --mpi [--hdf5=/path/to/parallel/hdf5]
+python setup.py build
 
 #pip3 install --user --no-binary=h5py h5py
 
