@@ -121,7 +121,7 @@ MPICXX=mpicxx \
 make -j4
 make install
 
-# install h 
+# install h5py and link hdf5  
 cd ${H5PY_REPO}
 python setup.py configure --mpi --hdf5=${HDF5_DIR}
 python setup.py build
