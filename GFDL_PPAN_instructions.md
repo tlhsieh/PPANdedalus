@@ -1,9 +1,10 @@
-#Install notes for GFDL PPAN Cluster 
+Install notes for GFDL PPAN Cluster 
+***********************************
 
 This installation uses conda to install BLAS, openmpi, and the various Python packages required by dedalus. The only exceptions are HDF5, FFTW, and h5py which are built manually from source. For these manual installations, the source download must be conducted on the `public` nodes, which can access the internet. The installation, however, must be done on the `analysis` nodes, which have different compiliers. By default, these instructions create the directory ``\nbhome\${USER}\software`` and install dedalus, HDF5, FFTW, and h5py within this directory. We assume the user is running the default c-shell. 
 
-Downloads on Public 
--------------------
+Download Source Files to Public 
+-------------------------------
 
 These instructions assume you have installed Anaconda (or Miniconda) to your ``\nbhome\${USER}``. To start, let's create a new conda environemnt for your dedalus installation. 
 
@@ -85,10 +86,10 @@ We are now ready to create the directories and download the source files. To do 
 
     # download h5py from source
     cd /nbhome/${USER}/software/
-	git clone https://github.com/h5py/h5py.git
+    git clone https://github.com/h5py/h5py.git
 ```
 
-Installation on Analysis
+Build and Install on Analysis
 ------------------------
 Login into the analysis cluster and  ``source dedalus_paths.csh``. To build the packages, run the following script 
 
