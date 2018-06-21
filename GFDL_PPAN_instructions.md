@@ -65,14 +65,14 @@ setenv PATH ${FFTW_PATH}/bin:${PATH}
 setenv LD_LIBRARY_PATH ${FFTW_PATH}/lib:${LD_LIBRARY_PATH}
 
 setenv DEDALUS_REPO /nbhome/${USER}/software/dedalus
-setenv PYTHONPATH ${DEDALUS_REPO}:${PYTHONPATH}
 
 setenv H5PY_REPO /nbhome/${USER}/software/h5py
 
-if (! $?PYTHON_PATH) then
-  setenv PYTHON_PATH "${DEDALUS_REPO}"
+#add or append dedalus to python path 
+if (! $?PYTHONPATH) then
+  setenv PYTHONPATH "${DEDALUS_REPO}"
 else
-  setenv PYTHON_PATH "${DEDALUS_REPO}":${PYTHON_PATH}
+  setenv PYTHONPATH "${DEDALUS_REPO}":${PYTHONPATH}
 endif
 ```
 
