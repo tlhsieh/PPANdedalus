@@ -126,6 +126,7 @@ make install
 cd ${H5PY_REPO}
 python setup.py configure --mpi --hdf5=${HDF5_DIR}
 python setup.py build
+python setup.py install
 
 # build HDF5 from source
 cd ${FFTW_PATH}
