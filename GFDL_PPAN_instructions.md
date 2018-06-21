@@ -35,10 +35,9 @@ dependencies:
 Setup and activate the dedalus environment, 
 ```
 conda env create -f dedalus.yml
-conda activate dedalus 
 ```
 
-We will now create a file that sets the environment variables necessary for subsequently building the packages.
+We will now create a file that sets the environment variables necessary for subsequently building the packages and activates the conda environment.
 
 Create a file entitled ``dedalus_paths.csh`` with the following content:
 ```
