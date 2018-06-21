@@ -21,10 +21,10 @@ channels:
   - defaults
   - conda-forge 
 dependencies:
-  - numpy
+  - numpy=1.12
   - cython 
   - scipy 
-  - mpi4py 
+  - mpi4py=3.0 
   - openblas 
   - openmpi 
   - matplotlib
