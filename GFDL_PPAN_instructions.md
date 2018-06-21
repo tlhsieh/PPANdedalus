@@ -1,7 +1,8 @@
-## Install notes for GFDL PPAN Cluster 
-***********************************
+### Install notes for GFDL PPAN Cluster 
 
-This installation uses conda to install BLAS, openmpi, and the various Python packages required by dedalus. The only exceptions are HDF5, FFTW, and h5py which are built manually from source. For these manual installations, the source download must be conducted on the `public` nodes, which can access the internet. The installation, however, must be done on the `analysis` nodes, which have different compiliers. By default, these instructions create the directory ``\nbhome\${USER}\software`` and install dedalus, HDF5, FFTW, and h5py within this directory. We assume the user is running the default c-shell. 
+This installation uses conda to install BLAS, openmpi, and the various Python packages required by dedalus. The only exceptions are HDF5, FFTW, and h5py which are built manually from source. For these manual installations, the source download must be conducted on the `public` nodes, which can access the internet. **Installation must be done on the `analysis` nodes**, which has the necessary compiliers.
+
+By default, these instructions create the directory ``\nbhome\${USER}\software`` and install dedalus, HDF5, FFTW, and h5py within this directory. We assume the user is running the default c-shell. 
 
 Download Source Files to Public 
 -------------------------------
@@ -136,4 +137,5 @@ Login into the analysis cluster and  ``source dedalus_paths.csh``. To build the 
 
 Notes
 -----
+Based on the [MIT Engage cluster install notes](http://dedalus-project.readthedocs.io/en/latest/machines/engaging/engaging.html). Last edited by Nathaniel Tarshish on June 21, 2018 
 
