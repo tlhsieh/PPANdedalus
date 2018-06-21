@@ -107,7 +107,7 @@ Build and Install on Analysis
 Login into the analysis cluster and  ``source dedalus_paths.csh``. To build the packages, run the following script 
 
 ```
-# HDF5 built from source
+# build HDF5 from source
 cd ${HDF5_DIR}
 tar -xvf hdf5-${HDF5_VERSION}.tar
 cd hdf5-${HDF5_VERSION}
@@ -122,11 +122,12 @@ MPICXX=mpicxx \
 make -j4
 make install
 
+# install h 
 cd ${H5PY_REPO}
 python setup.py configure --mpi --hdf5=${HDF5_DIR}
 python setup.py build
 
-# FFTW built from source
+# build HDF5 from source
 cd ${FFTW_PATH}
 tar -xvzf fftw-${FFTW_VERSION}.tar.gz
 cd fftw-${FFTW_VERSION}
@@ -143,7 +144,7 @@ MPICXX=mpicxx \
 make -j4
 make install
 
-# Dedalus from mercurial
+# install Dedalus 
 cd ${DEDALUS_REPO}
 python setup.py build_ext --inplace
 ```
