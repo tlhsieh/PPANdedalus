@@ -68,6 +68,12 @@ setenv DEDALUS_REPO /nbhome/${USER}/software/dedalus
 setenv PYTHONPATH ${DEDALUS_REPO}:${PYTHONPATH}
 
 setenv H5PY_REPO /nbhome/${USER}/software/h5py
+
+if (! $?PYTHON_PATH) then
+  setenv PYTHON_PATH "${DEDALUS_REPO}"
+else
+  setenv PYTHON_PATH "${DEDALUS_REPO}":${PYTHON_PATH}
+endif
 ```
 
 Now run, ``source dedalus_paths.csh`` to set these environmental paths. 
@@ -114,12 +120,9 @@ MPICXX=mpicxx \
 make -j4
 make install
 
-
 cd ${H5PY_REPO}
-python setup.py configure --mpi [--hdf5=/path/to/parallel/hdf5]
+python setup.py configure --mpi --hdf5=${HDF5_DIR}
 python setup.py build
-
-#pip3 install --user --no-binary=h5py h5py
 
 # FFTW built from source
 cd ${FFTW_PATH}
