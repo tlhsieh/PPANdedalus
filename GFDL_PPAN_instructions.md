@@ -19,7 +19,7 @@ channels:
   - defaults
   - conda-forge 
 dependencies:
-  - numpy=1.12 
+  - numpy
   - cython 
   - scipy 
   - mpi4py 
