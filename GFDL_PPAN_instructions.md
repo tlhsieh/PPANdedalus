@@ -152,4 +152,4 @@ python setup.py build_ext --inplace
 
 Notes
 -----
-Based on the [MIT Engage cluster install notes](http://dedalus-project.readthedocs.io/en/latest/machines/engaging/engaging.html). Last edited by Nathaniel Tarshish on June 21, 2018 
+Based on the [MIT Engage cluster install notes](http://dedalus-project.readthedocs.io/en/latest/machines/engaging/engaging.html). Written by [Spencer Clark](https://github.com/spencerkclark) and Nathaniel Tarshish on June 21, 2018. We've had FFTW issues running with the default version of numpy (1.14) selected by conda. Therefore, we have pinned numpy to 1.12 in the `.yml` file. We anticipate that setup on `gaea` could be done in a similar fashion. As a result of mercurial not being available on analysis, we have opted for the setting up the requirements through conda and excluding `hgapi`. 
