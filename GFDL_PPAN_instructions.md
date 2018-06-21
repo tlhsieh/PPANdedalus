@@ -133,7 +133,6 @@ make install
 
 # Dedalus from mercurial
 cd ${DEDALUS_REPO}
-#pip install --user -r requirements.txt
 python setup.py build_ext --inplace
 ```
 
