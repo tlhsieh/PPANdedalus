@@ -30,6 +30,7 @@ dependencies:
   - matplotlib
   - pathlib
   - docopt
+  - pkgconfig
 ```
 
 Setup and activate the dedalus environment, 
