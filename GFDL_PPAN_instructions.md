@@ -21,6 +21,7 @@ channels:
   - defaults
   - conda-forge 
 dependencies:
+  - python=3
   - numpy
   - nomkl
   - cython 
