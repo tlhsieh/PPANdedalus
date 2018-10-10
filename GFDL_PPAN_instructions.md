@@ -21,7 +21,8 @@ channels:
   - defaults
   - conda-forge 
 dependencies:
-  - numpy=1.12
+  - numpy
+  - nomkl
   - cython 
   - scipy 
   - mpi4py=3.0 
