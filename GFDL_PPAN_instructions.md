@@ -42,7 +42,7 @@ conda env create -f dedalus.yml
 
 We will now create a file that sets the environment variables necessary for subsequently building the packages and activates the conda environment.
 
-Create a file entitled ``dedalus_paths.csh`` with the following content:
+Create a file entitled ``dedalus_paths.bash`` with the following content:
 ```
 #DEDALUS SETUP
 
@@ -71,6 +71,9 @@ export LD_LIBRARY_PATH=${FFTW_PATH}/lib:${LD_LIBRARY_PATH}
 export DEDALUS_REPO=/net2/${USER}/dedalus
 
 export H5PY_REPO=/net2/${USER}/h5py
+
+export HDF5_VERSION=1.10.4
+export FFTW_VERSION=3.3.8
 
 # add or append dedalus to python path 
 if [ -z "${PYTHONPATH}" ]
