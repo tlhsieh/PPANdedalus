@@ -98,11 +98,9 @@ wget http://www.fftw.org/fftw-${FFTW_VERSION}.tar.gz
 
 # Dedalus from mercurial
 hg clone https://bitbucket.org/dedalus-project/dedalus ${DEDALUS_REPO}
-cd ${DEDALUS_REPO}
 
 # download h5py from source
-cd /net2/${USER}
-git clone https://github.com/h5py/h5py.git
+git clone https://github.com/h5py/h5py.git ${H5PY_REPO}
 ```
 
 Build and Install on Analysis
