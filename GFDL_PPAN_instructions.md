@@ -6,12 +6,12 @@ This installation uses conda to install BLAS, openmpi, and the various Python pa
 
 For these manual installations, the source download must be conducted on the `public` nodes, which can access the internet. **Installation must be done on the analysis nodes**, which have the proper compiliers. 
 
-By default, these instructions create the directory ``/nbhome/${USER}/software`` and install dedalus, HDF5, FFTW, and h5py within this directory. We assume the user is running the default c-shell. 
+By default, these instructions install dedalus, HDF5, FFTW, and h5py within ``/net2/${USER}``. We assume the user is running bash. 
 
 Download Source Files to Public 
 -------------------------------
 
-These instructions also assume you have installed Anaconda (or Miniconda) to ``/nbhome/${USER}``. To start, let's create a new conda environemnt for your dedalus installation. 
+These instructions also assume you have installed Anaconda (or Miniconda) to ``/net2/${USER}``. To start, let's create a new conda environemnt for your dedalus installation. 
 
 Login into ``public`` and create a  ``dedalus.yml`` file with the following contents:
 
@@ -21,7 +21,9 @@ channels:
   - defaults
   - conda-forge 
 dependencies:
-  - numpy=1.12
+  - python=3
+  - numpy
+  - nomkl
   - cython 
   - scipy 
   - mpi4py=3.0 
@@ -40,42 +42,46 @@ conda env create -f dedalus.yml
 
 We will now create a file that sets the environment variables necessary for subsequently building the packages and activates the conda environment.
 
-Create a file entitled ``dedalus_paths.csh`` with the following content:
+Create a file entitled ``dedalus_paths.bash`` with the following content:
 ```
 #DEDALUS SETUP
 
+alias module='/usr/local/Modules/$MODULE_VERSION/bin/modulecmd bash '
 module load gcc
 
-setenv CC mpicc
+export CC=mpicc
 
-source /nbhome/${USER}/anaconda3/etc/profile.d/conda.csh
-conda activate dedalus
+source activate dedalus
 
-setenv BLAS /nbhome/${USER}/anaconda3/envs/dedalus/lib/libopenblas.so
-setenv MPI_PATH /nbhome/${USER}/anaconda3/envs/dedalus/lib/openmpi
-setenv LD_LIBRARY_PATH ${MPI_PATH}:${BLAS}:${LD_LIBRARY_PATH}
+export BLAS=/net2/${USER}/anaconda3/envs/dedalus/lib/libopenblas.so
+export MPI_PATH=/net2/${USER}/anaconda3/envs/dedalus/lib/openmpi
+export LD_LIBRARY_PATH=${MPI_PATH}:${BLAS}:${LD_LIBRARY_PATH}
 
-setenv HDF5_DIR /nbhome/${USER}/software/hdf5
-setenv HDF5_VERSION 1.10.1
-setenv HDF5_MPI "ON"
-setenv PATH ${HDF5_DIR}/bin:${PATH}
-setenv LD_LIBRARY_PATH ${HDF5_DIR}/lib:${LD_LIBRARY_PATH}
+export HDF5_DIR=/net2/${USER}/hdf5
+export HDF5_VERSION=1.10.1
+export HDF5_MPI="ON"
+export PATH=${HDF5_DIR}/bin:${PATH}
+export LD_LIBRARY_PATH=${HDF5_DIR}/lib:${LD_LIBRARY_PATH}
 
-setenv FFTW_PATH /nbhome/${USER}/software/fftw
-setenv FFTW_VERSION 3.3.6-pl2
-setenv PATH ${FFTW_PATH}/bin:${PATH}
-setenv LD_LIBRARY_PATH ${FFTW_PATH}/lib:${LD_LIBRARY_PATH}
+export FFTW_PATH=/net2/${USER}/fftw
+export FFTW_VERSION=3.3.6-pl2
+export PATH=${FFTW_PATH}/bin:${PATH}
+export LD_LIBRARY_PATH=${FFTW_PATH}/lib:${LD_LIBRARY_PATH}
 
-setenv DEDALUS_REPO /nbhome/${USER}/software/dedalus
+export DEDALUS_REPO=/net2/${USER}/dedalus
 
-setenv H5PY_REPO /nbhome/${USER}/software/h5py
+export H5PY_REPO=/net2/${USER}/h5py
 
-#add or append dedalus to python path 
-if (! $?PYTHONPATH) then
-  setenv PYTHONPATH "${DEDALUS_REPO}"
+export HDF5_VERSION=1.10.4
+export FFTW_VERSION=3.3.8
+
+# add or append dedalus to python path 
+if [ -z "${PYTHONPATH}" ]
+then
+  export PYTHONPATH="${DEDALUS_REPO}"
 else
-  setenv PYTHONPATH "${DEDALUS_REPO}":${PYTHONPATH}
-endif
+  export PYTHONPATH="${DEDALUS_REPO}":"${PYTHONPATH}"
+fi
 ```
 
 Now run, ``source dedalus_paths.csh`` to set these environmental paths. 
@@ -95,11 +101,9 @@ wget http://www.fftw.org/fftw-${FFTW_VERSION}.tar.gz
 
 # Dedalus from mercurial
 hg clone https://bitbucket.org/dedalus-project/dedalus ${DEDALUS_REPO}
-cd ${DEDALUS_REPO}
 
 # download h5py from source
-cd /nbhome/${USER}/software/
-git clone https://github.com/h5py/h5py.git
+git clone https://github.com/h5py/h5py.git ${H5PY_REPO}
 ```
 
 Build and Install on Analysis
@@ -152,4 +156,4 @@ python setup.py build_ext --inplace
 
 Notes
 -----
-Based on the [MIT Engage cluster install notes](http://dedalus-project.readthedocs.io/en/latest/machines/engaging/engaging.html). Written by [Spencer Clark](https://github.com/spencerkclark) and Nathaniel Tarshish on June 21, 2018. We've had FFTW issues running with the default version of numpy (1.14) selected by conda. Therefore, we have pinned numpy to 1.12 in the `.yml` file. We anticipate that setup on `gaea` could be done in a similar fashion. As a result of mercurial not being available on analysis, we have opted for the setting up the requirements through conda and excluding `hgapi`. 
+Based on the [MIT Engage cluster install notes](http://dedalus-project.readthedocs.io/en/latest/machines/engaging/engaging.html). Written by [Spencer Clark](https://github.com/spencerkclark) and Nathaniel Tarshish on June 21, 2018. We explicitly install `numpy` without MKL optimizations to avoid interfering with our manually-installed version of FFTW (see [this thread](https://groups.google.com/forum/#!searchin/dedalus-users/mkl%7Csort:date/dedalus-users/01kC06t7S9g/3Bsn0uW6AAAJ) on the Dedalus email list describing the issue). In addition, as a result of mercurial not being available on analysis, we have opted for setting up the requirements through conda and excluding `hgapi`. Note that installing dedalus on Gaea requires a fairly different approach -- see [here](https://github.com/spencerkclark/dedalus-on-gaea) for more details.
